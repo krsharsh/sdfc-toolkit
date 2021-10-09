@@ -1,10 +1,18 @@
+import React from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import Homepage from './pages/Homepage/Hompage.page';
+import SignInSignUp from './pages/SignInSignUp/SignInSignUp.page';
+import Dashboard from './pages/Dashboard/Dashboard.page';
 import './App.css';
 
 function App() {
   return (
-    <div className='App'>
-      <h1>Salesforce Developer Tools</h1>
-    </div>
+    <Switch>
+      <Route exact path='/' component={Homepage} />
+      <Route path='/signin' component={SignInSignUp} />
+      <Route path='/dashboard' component={Dashboard} />
+      <Redirect to='/' />
+    </Switch>
   );
 }
 
