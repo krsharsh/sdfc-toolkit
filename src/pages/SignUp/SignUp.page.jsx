@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import FormInput from '../../components/FormInput/FormInput.component';
 import CustomButton from '../../components/CustomButton/CustomButton.component';
+
+import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
 import './SignUp.styles.scss';
 
@@ -10,20 +12,44 @@ const SignUp = () => {
   const [userCredentials, setUserCredentials] = useState({
     displayName: '',
     email: '',
-    phone: '',
+    phoneNumber: '',
     password: '',
     confirmPassword: '',
   });
+  let history = useHistory();
 
-  const { displayName, email, phone, password, confirmPassword } =
+  const { displayName, email, phoneNumber, password, confirmPassword } =
     userCredentials;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
       alert("Password don't match");
       return;
+    }
+    if (password.length < 6) {
+      alert('Password lenght is not sufficent, write atleast 6 characters');
+      return;
+    }
+
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      await createUserProfileDocument(user, { displayName, phoneNumber });
+      await setUserCredentials({
+        displayName: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        confirmPassword: '',
+      });
+
+      history.push('/signin');
+    } catch (err) {
+      console.log('Error creating new user in signup' + err.message);
     }
     console.log(userCredentials);
   };
@@ -56,8 +82,8 @@ const SignUp = () => {
         ></FormInput>
         <FormInput
           type='number'
-          name='phone'
-          value={phone}
+          name='phoneNumber'
+          value={phoneNumber}
           onChange={handleChange}
           label='Phone'
         ></FormInput>
