@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import FormInput from '../../components/FormInput/FormInput.component';
 import CustomButton from '../../components/CustomButton/CustomButton.component';
 
-import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
 import './SignIn.styles.scss';
 
@@ -16,12 +16,17 @@ const SignIn = () => {
 
   const { email, password } = userCredentials;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setUserCredentials({
-      email: '',
-      password: '',
-    });
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      setUserCredentials({
+        email: '',
+        password: '',
+      });
+    } catch (err) {
+      console.log('Error in siging in with email password ', err.message);
+    }
   };
 
   const handleChange = (event) => {
