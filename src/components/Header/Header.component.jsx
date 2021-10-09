@@ -5,7 +5,7 @@ import './Header.styles.scss';
 const Header = () => (
   <div className='header'>
     <Link to='/' className='header-title'>
-      SF-DEV-TOOLS
+      SFDC-TOOLKIT
     </Link>
     <div className='options'>
       <Link className='option' to='/'>
@@ -15,7 +15,7 @@ const Header = () => (
         Dashboard
       </Link>
       <Link className='option' to='/signin'>
-        Log In
+        Sign In
       </Link>
     </div>
   </div>
