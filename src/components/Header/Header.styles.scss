@@ -1,0 +1,22 @@
+.header {
+  background: lightgrey;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+
+  .header-title {
+    padding: 0 30px;
+    font-size: 2rem;
+  }
+
+  .options {
+    display: flex;
+    padding: 0 25px;
+
+    .option {
+      padding: 25px;
+    }
+  }
+}
