@@ -1,24 +1,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { auth } from '../../firebase/firebase.utils';
 import './Header.styles.scss';
 
-const Header = () => (
-  <div className='header'>
-    <Link to='/' className='header-title'>
-      SFDC-TOOLKIT
-    </Link>
-    <div className='options'>
-      <Link className='option' to='/'>
-        Home
+const Header = ({ currentUser }) => {
+  console.log(currentUser);
+  return (
+    <div className='header'>
+      <Link to='/' className='header-title'>
+        SFDC-TOOLKIT
       </Link>
-      <Link className='option' to='/dashboard'>
-        Dashboard
-      </Link>
-      <Link className='option' to='/signin'>
-        Sign In
-      </Link>
+      <div className='options'>
+        {currentUser ? (
+          <div className='option'>Hi, {currentUser.displayName}</div>
+        ) : null}
+        <Link className='option' to='/'>
+          Home
+        </Link>
+        <Link className='option' to='/dashboard'>
+          Dashboard
+        </Link>
+        {currentUser ? (
+          <Link className='option' onClick={() => auth.signOut()} to='/'>
+            Sign Out
+          </Link>
+        ) : (
+          <Link className='option' to='/signin'>
+            Sign In
+          </Link>
+        )}
+      </div>
     </div>
-  </div>
-);
-
+  );
+};
 export default Header;

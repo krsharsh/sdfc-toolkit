@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import FormInput from '../../components/FormInput/FormInput.component';
 import CustomButton from '../../components/CustomButton/CustomButton.component';
 
+import { signInWithGoogle } from '../../firebase/firebase.utils';
+
 import './SignIn.styles.scss';
 
 const SignIn = () => {
@@ -56,11 +58,7 @@ const SignIn = () => {
           <CustomButton type='submit' value='Submit Form'>
             Sign In
           </CustomButton>
-          <CustomButton
-            type='button'
-            // onClick={googleSignInStart}
-            isGoogleSignIn
-          >
+          <CustomButton type='button' onClick={signInWithGoogle} isGoogleSignIn>
             Sign In With Google
           </CustomButton>
         </div>
