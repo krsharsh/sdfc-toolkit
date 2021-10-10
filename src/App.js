@@ -6,6 +6,7 @@ import Homepage from './pages/Homepage/Hompage.page';
 import Dashboard from './pages/Dashboard/Dashboard.page';
 import SignIn from './pages/SignIn/SignIn.page';
 import SignUp from './pages/SignUp/SignUp.page';
+import Callback from './pages/Callback/Callback.page';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
@@ -60,6 +61,7 @@ class App extends React.Component {
           />
           <Route path='/signup' component={SignUp} />
           <Route path='/dashboard' component={Dashboard} />
+          <Route path='/callback' component={Callback} />
           <Redirect to='/' />
         </Switch>
       </div>
