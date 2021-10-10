@@ -17,9 +17,11 @@ const Header = ({ currentUser }) => {
         <Link className='option' to='/'>
           Home
         </Link>
-        <Link className='option' to='/dashboard'>
-          Dashboard
-        </Link>
+        {currentUser ? (
+          <Link className='option' to='/dashboard'>
+            Dashboard
+          </Link>
+        ) : null}
         {currentUser ? (
           <Link className='option' onClick={() => auth.signOut()} to='/'>
             Sign Out
