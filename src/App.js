@@ -45,11 +45,11 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path='/' component={Homepage} />
-          {/* <Route path='/signin' component={SignIn} /> */}
           <Route
+            exact
             path='/signin'
             render={() =>
-              this.state.currentUser ? <Redirect to='/' /> : <SignIn />
+              this.props.currentUser ? <Redirect to='/' /> : <SignIn />
             }
           />
           <Route path='/signup' component={SignUp} />
@@ -62,8 +62,12 @@ class App extends React.Component {
   }
 }
 
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
