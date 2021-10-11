@@ -46,7 +46,6 @@ const SignUp = () => {
         password: '',
         confirmPassword: '',
       });
-
       history.push('/signin');
     } catch (err) {
       console.log('Error creating new user in signup' + err.message);
