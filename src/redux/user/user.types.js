@@ -1,3 +1,4 @@
 export const UserActionTypes = {
   SET_CURRENT_USER: 'SET_CURRENT_USER',
+  SET_PRODUCTION_CODE: 'SET_PRODUCTION_CODE',
 };
