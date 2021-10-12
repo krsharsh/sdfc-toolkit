@@ -5,10 +5,10 @@ import { createStructuredSelector } from 'reselect';
 
 import { auth } from '../../firebase/firebase.utils';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
-
+import { setEnvironment } from '../../redux/environment/environment.actions';
 import './Header.styles.scss';
 
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, setEnvironment }) => {
   // console.log(currentUser);
   return (
     <div className='header'>
@@ -28,7 +28,14 @@ const Header = ({ currentUser }) => {
           </Link>
         ) : null}
         {currentUser ? (
-          <Link className='option' onClick={() => auth.signOut()} to='/'>
+          <Link
+            className='option'
+            onClick={() => {
+              setEnvironment(null);
+              auth.signOut();
+            }}
+            to='/'
+          >
             Sign Out
           </Link>
         ) : (
@@ -44,4 +51,8 @@ const Header = ({ currentUser }) => {
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
-export default connect(mapStateToProps)(Header);
+
+const mapDispatchToProps = (dispatch) => ({
+  setEnvironment: (env) => dispatch(setEnvironment(env)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

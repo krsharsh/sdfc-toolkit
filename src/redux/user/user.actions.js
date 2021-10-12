@@ -5,9 +5,12 @@ export const setCurrentUser = (user) => ({
   payload: user,
 });
 
-export const setProductionCode = (code) => ({
-  type: UserActionTypes.SET_PRODUCTION_CODE,
-  payload: {
-    code: code,
-  },
+export const setProductionCodeUser = (code) => ({
+  type: UserActionTypes.SET_PRODUCTION_CODE_USER,
+  payload: code,
+});
+
+export const setDevelopmentCodeUser = (code) => ({
+  type: UserActionTypes.SET_DEVLOPMENT_CODE_USER,
+  payload: code,
 });

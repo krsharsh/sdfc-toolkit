@@ -8,6 +8,11 @@ export const selectCurrentUser = createSelector(
   (user) => user.currentUser
 );
 
+export const selectCurrentUserProduction = createSelector(
+  [selectCurrentUser],
+  (currentUser) => (currentUser ? currentUser.production : null)
+);
+
 export const selectProduction = createSelector(
   [selectUser],
   (user) => user.production

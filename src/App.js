@@ -57,8 +57,18 @@ class App extends React.Component {
             }
           />
           <Route path='/signup' component={SignUp} />
-          <Route path='/dashboard' component={Dashboard} />
-          <Route path='/callback' component={Callback} />
+          <Route
+            path='/dashboard'
+            render={() =>
+              currentUser ? <Dashboard /> : <Redirect to='/signin' />
+            }
+          />
+          <Route
+            path='/callback'
+            render={() =>
+              currentUser ? <Callback /> : <Redirect to='/signin' />
+            }
+          />
           <Redirect to='/' />
         </Switch>
       </div>

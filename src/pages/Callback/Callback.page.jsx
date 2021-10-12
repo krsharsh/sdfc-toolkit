@@ -3,19 +3,14 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import {
-  selectCurrentUser,
-  selectDevelopmentCode,
-  selectProductionCode,
-} from '../../redux/user/user.selectors';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { selectEnvironment } from '../../redux/environment/environment.selectors';
-import {
-  setCurrentUser,
-  setProductionCode,
-} from '../../redux/user/user.actions';
+import { setCurrentUser } from '../../redux/user/user.actions';
 
 import queryString from 'query-string';
 import Spinner from '../../components/Spinner/Spinner.component';
+
+import { updateUserProfileDocument } from '../../firebase/firebase.utils';
 
 const Callback = ({
   currentUser,
@@ -34,44 +29,34 @@ const Callback = ({
     console.log(queries.code);
     console.log(currentUser);
     if (selectEnvironment === 'production') {
-      setCurrentUser({
-        ...currentUser,
+      const productionAttribute = {
         production: {
           code: queries.code,
         },
-      });
-      setProductionCode(queries.code);
+      };
+
+      updateUserProfileDocument(currentUser, productionAttribute);
     } else if (selectEnvironment === 'development') {
-      setCurrentUser({
-        ...selectCurrentUser,
+      const developmentAttribute = {
         development: {
           code: queries.code,
         },
-      });
+      };
+      updateUserProfileDocument(currentUser, developmentAttribute);
     }
     setloading(false);
-
     history.push('/dashboard');
-  }, [
-    location.search,
-    currentUser,
-    selectEnvironment,
-    setProductionCode,
-    history,
-  ]);
+  }, [location.search, currentUser, selectEnvironment, history, loading]);
   return <div>{loading ? <Spinner /> : null}</div>;
 };
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  production: selectProductionCode,
-  development: selectDevelopmentCode,
   selectEnvironment: selectEnvironment,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-  setProductionCode: (code) => dispatch(setProductionCode(code)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Callback);

@@ -7,7 +7,7 @@ import environmentReducer from './environment/environment.reducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['environment'],
+  whitelist: ['environment', 'user'],
 };
 
 const rootReducer = combineReducers({

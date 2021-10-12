@@ -3,17 +3,11 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import CustomButton from '../../components/CustomButton/CustomButton.component';
-import {
-  selectCurrentUser,
-  selectDevelopmentCode,
-  selectProductionCode,
-} from '../../redux/user/user.selectors';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { setEnvironment } from '../../redux/environment/environment.actions';
 import { selectEnvironment } from '../../redux/environment/environment.selectors';
 const ConnectSalesforce = ({
   environment,
-  production,
-  development,
   setEnvironment,
   selectEnvironment,
   ...otherProps
@@ -32,7 +26,6 @@ const ConnectSalesforce = ({
     } else if (environment === 'test') {
       console.log('env = test');
       console.log(selectEnvironment);
-
       setEnvironment('development');
     }
     console.log(environment);
@@ -52,8 +45,6 @@ const ConnectSalesforce = ({
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  production: selectProductionCode,
-  development: selectDevelopmentCode,
   selectEnvironment: selectEnvironment,
 });
 
