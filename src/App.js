@@ -42,6 +42,8 @@ class App extends React.Component {
   }
 
   render() {
+    const { currentUser } = this.props;
+
     return (
       <div>
         <Header />
@@ -51,7 +53,7 @@ class App extends React.Component {
             exact
             path='/signin'
             render={() =>
-              this.props.currentUser ? <Redirect to='/' /> : <SignIn />
+              currentUser ? <Redirect to='/dashboard' /> : <SignIn />
             }
           />
           <Route path='/signup' component={SignUp} />
