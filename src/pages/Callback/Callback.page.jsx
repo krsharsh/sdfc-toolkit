@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { selectEnvironment } from '../../redux/environment/environment.selectors';
 import { setCurrentUser } from '../../redux/user/user.actions';
@@ -16,10 +15,11 @@ const Callback = ({
   currentUser,
   selectEnvironment,
   location,
-  setProductionCode,
+  ...otherProps
 }) => {
   const [loading, setloading] = useState(true);
   let history = useHistory();
+
   useEffect(() => {
     setloading(true);
 
@@ -34,7 +34,6 @@ const Callback = ({
           code: queries.code,
         },
       };
-
       updateUserProfileDocument(currentUser, productionAttribute);
     } else if (selectEnvironment === 'development') {
       const developmentAttribute = {
@@ -45,8 +44,10 @@ const Callback = ({
       updateUserProfileDocument(currentUser, developmentAttribute);
     }
     setloading(false);
+
     history.push('/dashboard');
   }, [location.search, currentUser, selectEnvironment, history, loading]);
+
   return <div>{loading ? <Spinner /> : null}</div>;
 };
 
@@ -59,4 +60,6 @@ const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Callback);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Callback)
+);
